@@ -1,0 +1,1221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<excel>
+   <entity name="空运" code="airPrice" >
+   		<column name="参数" code="no" type="String"></column>
+   		<column name="起运机场" code="startAirportCode" type="String">  
+            <rules>   
+                <rule name="nullable" message="起运机场不允许为空"></rule>  
+            </rules>                
+        </column>
+        <column name="目的机场" code="endAirportCode" type="String">  
+            <rules>   
+                <rule name="nullable" message="起运机场不允许为空"></rule>  
+            </rules>                
+        </column>
+        <column name="是否中转" code="isTransfer" type="int" valuechange="是-1/否-0">  
+            <rules>   
+                <rule name="nullable" message="是否中转不允许为空"></rule>
+                <rule name="valueable" value="是/否" message="是否中转只能填(是/否)"></rule>
+            </rules>                
+        </column>
+        <column name="中转地" code="addressCode" type="String" list="transferAddressList">  
+            <rules>   
+                <rule name="ifnullable" condition="isTransfer" value="是" message="中转地不允许为空"></rule>
+            </rules>                
+        </column>
+        <column name="航期" code="airlinesWeek" type="String">  
+            <rules>   
+                <rule name="nullable" message="航期不允许为空"></rule>
+                <rule name="valueable" value="周一/周二/周三/周四/周五/周六/周天" message="航期只能填(周一/周二/周三/周四/周五/周六/周天)"></rule>
+            </rules>                
+        </column>
+        <column name="航程（天）" code="voyage" type="String">  
+        </column>
+        <column name="航空公司" code="airlineCompany" type="String">  
+        </column>
+        <column name="币种" code="priceUnitCode" type="String">
+        	<rules>   
+                <rule name="nullable" message="币种不允许为空"></rule>
+                <rule name="valueable" value="CNY/USD" message="币种只能填(CNY/USD)"></rule>
+            </rules>
+        </column>
+        <column name="M(最低费用)" code="price" type="Double" list="priceDetails" defaultproperties="unitName=M">
+        	<rules>   
+                <rule name="numbleable" message="M(最低费用)必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="N(45以内费用)" code="price" type="Double" list="priceDetails" defaultproperties="unitName=N">
+        	<rules>   
+                <rule name="numbleable" message="N(45以内费用)必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="45+" code="price" type="Double" list="priceDetails" defaultproperties="unitName=45+">
+        	<rules>   
+                <rule name="numbleable" message="45+必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="100+" code="price" type="Double" list="priceDetails" defaultproperties="unitName=100+">
+        	<rules>   
+                <rule name="numbleable" message="100+必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="300+" code="price" type="Double" list="priceDetails" defaultproperties="unitName=300+">
+        	<rules>   
+                <rule name="numbleable" message="300+必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="500+" code="price" type="Double" list="priceDetails" defaultproperties="unitName=500+">
+        	<rules>   
+                <rule name="numbleable" message="500+必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="1000+" code="price" type="Double" list="priceDetails" defaultproperties="unitName=1000+">
+        	<rules>   
+                <rule name="numbleable" message="1000+必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="起始有效期" code="effectiveStartDate" type="Date">
+        	<rules>
+        		<rule name="nullable" message="起始有效期不允许为空"></rule> 
+                <rule name="dateable" message="起始有效期必须是YYYY-MM-DD的日期格式"></rule>
+            </rules>
+        </column>
+        <column name="截止有效期" code="effectiveEndDate" type="Date">
+        	<rules>
+        		<rule name="nullable" message="截止有效期不允许为空"></rule> 
+                <rule name="dateable" message="截止有效期必须是YYYY-MM-DD的日期格式"></rule>
+            </rules>
+        </column>
+        <column name="备注" code="priceRemark" type="String">
+        	<rules>   
+                <rule name="lengthable" min="0" max="1000" message="备注长度是0-1000字符"></rule>
+            </rules>
+        </column>
+   </entity>
+   <!-- 陆运-货柜车 -->
+   <entity name="陆运-货柜车" code="landPrice-1" >
+   		<column name="参数" code="no" type="String"></column>
+   		<column name="陆运类型" code="transportType" type="int" valuechange="跨境运输-1/国内运输-2/港区运输-3/园区运输-4">  
+            <rules>   
+                <rule name="nullable" message="陆运类型不允许为空"></rule>  
+            </rules>                
+        </column>
+   		<column name="起运地" code="startAddress" type="String">  
+            <rules>   
+                <rule name="nullable" message="起运地不允许为空"></rule>  
+            </rules>                
+        </column>
+        <column name="取货范围" code="startStreet" type="String">  
+            <rules>   
+                <rule name="nullable" message="取货范围不允许为空"></rule>  
+            </rules>                
+        </column>
+        <column name="目的地" code="endAddress" type="String">  
+            <rules>   
+                <rule name="nullable" message="目的地不允许为空"></rule>  
+            </rules>                
+        </column>
+        <column name="送货范围" code="endStreet" type="String">  
+            <rules>   
+                <rule name="nullable" message="送货范围不允许为空"></rule>  
+            </rules>                
+        </column>
+        <column name="车期" code="carWeek" type="String">  
+            <rules>   
+                <rule name="nullable" message="航期不允许为空"></rule>
+                <rule name="valueable" value="周一/周二/周三/周四/周五/周六/周天" message="航期只能填(周一/周二/周三/周四/周五/周六/周天)"></rule>
+            </rules>                
+        </column>
+        <column name="车程（天）" code="drive" type="String">  
+        </column>
+        <column name="车队公司" code="fleetCompany" type="String">  
+        </column>
+        <column name="币种" code="priceUnitCode" type="String">
+        	<rules>   
+                <rule name="nullable" message="币种不允许为空"></rule>
+                <rule name="valueable" value="CNY/USD" message="币种只能填(CNY/USD)"></rule>
+            </rules>
+        </column>
+        
+         <column name="20GP" code="price" type="Double" list="priceDetails" defaultproperties="unitName=20GP">
+        	<rules>   
+                <rule name="numbleable" message="20GP必须是数字"></rule>
+            </rules>
+        </column>
+         <column name="40GP" code="price" type="Double" list="priceDetails" defaultproperties="unitName=40GP">
+        	<rules>   
+                <rule name="numbleable" message="40GP必须是数字"></rule>
+            </rules>
+        </column>
+         <column name="53GP" code="price" type="Double" list="priceDetails" defaultproperties="unitName=53GP">
+        	<rules>   
+                <rule name="numbleable" message="53GP必须是数字"></rule>
+            </rules>
+        </column>
+         <column name="40HQ" code="price" type="Double" list="priceDetails" defaultproperties="unitName=40HQ">
+        	<rules>   
+                <rule name="numbleable" message="40HQ必须是数字"></rule>
+            </rules>
+        </column>
+         <column name="45HQ" code="price" type="Double" list="priceDetails" defaultproperties="unitName=45HQ">
+        	<rules>   
+                <rule name="numbleable" message="45HQ必须是数字"></rule>
+            </rules>
+        </column>
+         <column name="2*20GP" code="price" type="Double" list="priceDetails" defaultproperties="unitName=2*20GP">
+        	<rules>   
+                <rule name="numbleable" message="2*20GP必须是数字"></rule>
+            </rules>
+        </column>
+         <column name="20TK" code="price" type="Double" list="priceDetails" defaultproperties="unitName=20TK">
+        	<rules>   
+                <rule name="numbleable" message="20TK必须是数字"></rule>
+            </rules>
+        </column>
+         <column name="20OT" code="price" type="Double" list="priceDetails" defaultproperties="unitName=20OT">
+        	<rules>   
+                <rule name="numbleable" message="20OT必须是数字"></rule>
+            </rules>
+        </column>
+         <column name="20FR" code="price" type="Double" list="priceDetails" defaultproperties="unitName=20FR">
+        	<rules>   
+                <rule name="numbleable" message="20FR必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="40TK" code="price" type="Double" list="priceDetails" defaultproperties="unitName=40TK">
+        	<rules>   
+                <rule name="numbleable" message="40TK必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="40OT" code="price" type="Double" list="priceDetails" defaultproperties="unitName=40OT">
+        	<rules>   
+                <rule name="numbleable" message="40OT必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="40FR" code="price" type="Double" list="priceDetails" defaultproperties="unitName=40FR">
+        	<rules>   
+                <rule name="numbleable" message="40FR必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="起始有效期" code="effectiveStartDate" type="Date">
+        	<rules>
+        		<rule name="nullable" message="起始有效期不允许为空"></rule> 
+                <rule name="dateable" message="起始有效期必须是YYYY-MM-DD的日期格式"></rule>
+            </rules>
+        </column>
+        <column name="截止有效期" code="effectiveEndDate" type="Date">
+        	<rules>
+        		<rule name="nullable" message="截止有效期不允许为空"></rule> 
+                <rule name="dateable" message="截止有效期必须是YYYY-MM-DD的日期格式"></rule>
+            </rules>
+        </column>
+        <column name="备注" code="priceRemark" type="String">
+        	<rules>   
+                <rule name="lengthable" min="0" max="1000" message="备注长度是0-1000字符"></rule>
+            </rules>
+        </column>
+   </entity>
+   
+   <!-- 陆运-厢式吨车 -->
+   <entity name="陆运-厢式吨车" code="landPrice-2" >
+   		<column name="参数" code="no" type="String"></column>
+   		<column name="陆运类型" code="transportType" type="int" valuechange="跨境运输-1/国内运输-2/港区运输-3/园区运输-4">  
+            <rules>   
+                <rule name="nullable" message="陆运类型不允许为空"></rule>  
+            </rules>                
+        </column>
+   		<column name="起运地" code="startAddress" type="String">  
+            <rules>   
+                <rule name="nullable" message="起运地不允许为空"></rule>  
+            </rules>                
+        </column>
+        
+        <column name="取货范围" code="startStreet" type="String">  
+            <rules>   
+                <rule name="nullable" message="取货范围不允许为空"></rule>  
+            </rules>                
+        </column>
+        
+        <column name="目的地" code="endAddress" type="String">  
+            <rules>   
+                <rule name="nullable" message="目的地不允许为空"></rule>  
+            </rules>                
+        </column>
+        
+        <column name="送货范围" code="endStreet" type="String">  
+            <rules>   
+                <rule name="nullable" message="送货范围不允许为空"></rule>  
+            </rules>                
+        </column>
+        <column name="车期" code="carWeek" type="String">  
+            <rules>   
+                <rule name="nullable" message="航期不允许为空"></rule>
+                <rule name="valueable" value="周一/周二/周三/周四/周五/周六/周天" message="航期只能填(周一/周二/周三/周四/周五/周六/周天)"></rule>
+            </rules>                
+        </column>
+        <column name="车程（天）" code="drive" type="String">  
+        </column>
+        <column name="车队公司" code="fleetCompany" type="String">  
+        </column>
+        <column name="币种" code="priceUnitCode" type="String">
+        	<rules>   
+                <rule name="nullable" message="币种不允许为空"></rule>
+                <rule name="valueable" value="CNY/USD" message="币种只能填(CNY/USD)"></rule>
+            </rules>
+        </column>
+        
+        <column name="0.3T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=0.3T">
+        	<rules>   
+                <rule name="numbleable" message="0.3T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="0.5T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=0.5T">
+        	<rules>   
+                <rule name="numbleable" message="0.5T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="0.8T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=0.8T">
+        	<rules>   
+                <rule name="numbleable" message="0.8T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="0.9T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=0.9T">
+        	<rules>   
+                <rule name="numbleable" message="0.9T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="1.5T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=1.5T">
+        	<rules>   
+                <rule name="numbleable" message="1.5T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="3T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=3T">
+        	<rules>   
+                <rule name="numbleable" message="3T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="5T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=5T">
+        	<rules>   
+                <rule name="numbleable" message="5T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="8T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=8T">
+        	<rules>   
+                <rule name="numbleable" message="8T必须是数字"></rule>
+            </rules>
+        </column>
+        
+        <column name="10T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=10T">
+        	<rules>   
+                <rule name="numbleable" message="10T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="12T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=12T">
+        	<rules>   
+                <rule name="numbleable" message="12T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="15T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=15T">
+        	<rules>   
+                <rule name="numbleable" message="15T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="20T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=20T">
+        	<rules>   
+                <rule name="numbleable" message="20T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="35T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=35T">
+        	<rules>   
+                <rule name="numbleable" message="35T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="起始有效期" code="effectiveStartDate" type="Date">
+        	<rules>
+        		<rule name="nullable" message="起始有效期不允许为空"></rule> 
+                <rule name="dateable" message="起始有效期必须是YYYY-MM-DD的日期格式"></rule>
+            </rules>
+        </column>
+        <column name="截止有效期" code="effectiveEndDate" type="Date">
+        	<rules>
+        		<rule name="nullable" message="截止有效期不允许为空"></rule> 
+                <rule name="dateable" message="截止有效期必须是YYYY-MM-DD的日期格式"></rule>
+            </rules>
+        </column>
+        <column name="备注" code="priceRemark" type="String">
+        	<rules>   
+                <rule name="lengthable" min="0" max="1000" message="备注长度是0-1000字符"></rule>
+            </rules>
+        </column>
+   </entity>
+   <!-- 陆运-国内柜车 -->
+   <entity name="陆运-国内柜车" code="landPrice-5" >
+   		<column name="参数" code="no" type="String"></column>
+   		<column name="起运地" code="startAddress" type="String">  
+            <rules>   
+                <rule name="nullable" message="起运地不允许为空"></rule>  
+            </rules>                
+        </column>
+        <column name="目的地" code="endAddress" type="String">  
+            <rules>   
+                <rule name="nullable" message="目的地不允许为空"></rule>  
+            </rules>                
+        </column>
+        <column name="车期" code="carWeek" type="String">  
+            <rules>   
+                <rule name="nullable" message="航期不允许为空"></rule>
+                <rule name="valueable" value="周一/周二/周三/周四/周五/周六/周天" message="航期只能填(周一/周二/周三/周四/周五/周六/周天)"></rule>
+            </rules>                
+        </column>
+        <column name="车程（天）" code="drive" type="String">  
+        </column>
+        <column name="车队公司" code="fleetCompany" type="String">  
+        </column>
+        <column name="币种" code="priceUnitCode" type="String">
+        	<rules>   
+                <rule name="nullable" message="币种不允许为空"></rule>
+                <rule name="valueable" value="CNY/USD" message="币种只能填(CNY/USD)"></rule>
+            </rules>
+        </column>
+        
+        <column name="20GP" code="price" type="Double" list="priceDetails" defaultproperties="unitName=20GP">
+        	<rules>   
+                <rule name="numbleable" message="20GP必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="40GP" code="price" type="Double" list="priceDetails" defaultproperties="unitName=40GP">
+        	<rules>   
+                <rule name="numbleable" message="40GP必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="53GP" code="price" type="Double" list="priceDetails" defaultproperties="unitName=53GP">
+        	<rules>   
+                <rule name="numbleable" message="53GP必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="40HQ" code="price" type="Double" list="priceDetails" defaultproperties="unitName=40HQ">
+        	<rules>   
+                <rule name="numbleable" message="40HQ必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="45HQ" code="price" type="Double" list="priceDetails" defaultproperties="unitName=45HQ">
+        	<rules>   
+                <rule name="numbleable" message="45HQ必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="起始有效期" code="effectiveStartDate" type="Date">
+        	<rules>
+        		<rule name="nullable" message="起始有效期不允许为空"></rule> 
+                <rule name="dateable" message="起始有效期必须是YYYY-MM-DD的日期格式"></rule>
+            </rules>
+        </column>
+        <column name="截止有效期" code="effectiveEndDate" type="Date">
+        	<rules>
+        		<rule name="nullable" message="截止有效期不允许为空"></rule> 
+                <rule name="dateable" message="截止有效期必须是YYYY-MM-DD的日期格式"></rule>
+            </rules>
+        </column>
+        <column name="备注" code="priceRemark" type="String">
+        	<rules>   
+                <rule name="lengthable" min="0" max="1000" message="备注长度是0-1000字符"></rule>
+            </rules>
+        </column>
+   </entity>
+   <!-- 陆运-港区柜车 -->
+   <entity name="陆运-港区柜车" code="landPrice-7" >
+   		<column name="参数" code="no" type="String"></column>
+   		<column name="起运地" code="startAddress" type="String">  
+            <rules>   
+                <rule name="nullable" message="起运地不允许为空"></rule>  
+            </rules>                
+        </column>
+        <column name="目的地" code="endAddress" type="String">  
+            <rules>   
+                <rule name="nullable" message="目的地不允许为空"></rule>  
+            </rules>                
+        </column>
+        <column name="车期" code="carWeek" type="String">  
+            <rules>   
+                <rule name="nullable" message="航期不允许为空"></rule>
+                <rule name="valueable" value="周一/周二/周三/周四/周五/周六/周天" message="航期只能填(周一/周二/周三/周四/周五/周六/周天)"></rule>
+            </rules>                
+        </column>
+        <column name="车程（天）" code="drive" type="String">  
+        </column>
+        <column name="车队公司" code="fleetCompany" type="String">  
+        </column>
+        <column name="币种" code="priceUnitCode" type="String">
+        	<rules>   
+                <rule name="nullable" message="币种不允许为空"></rule>
+                <rule name="valueable" value="CNY/USD" message="币种只能填(CNY/USD)"></rule>
+            </rules>
+        </column>
+        
+        <column name="20GP" code="price" type="Double" list="priceDetails" defaultproperties="unitName=20GP">
+        	<rules>   
+                <rule name="numbleable" message="20GP必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="40GP" code="price" type="Double" list="priceDetails" defaultproperties="unitName=40GP">
+        	<rules>   
+                <rule name="numbleable" message="40GP必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="53GP" code="price" type="Double" list="priceDetails" defaultproperties="unitName=53GP">
+        	<rules>   
+                <rule name="numbleable" message="53GP必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="40HQ" code="price" type="Double" list="priceDetails" defaultproperties="unitName=40HQ">
+        	<rules>   
+                <rule name="numbleable" message="40HQ必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="45HQ" code="price" type="Double" list="priceDetails" defaultproperties="unitName=45HQ">
+        	<rules>   
+                <rule name="numbleable" message="45HQ必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="起始有效期" code="effectiveStartDate" type="Date">
+        	<rules>
+        		<rule name="nullable" message="起始有效期不允许为空"></rule> 
+                <rule name="dateable" message="起始有效期必须是YYYY-MM-DD的日期格式"></rule>
+            </rules>
+        </column>
+        <column name="截止有效期" code="effectiveEndDate" type="Date">
+        	<rules>
+        		<rule name="nullable" message="截止有效期不允许为空"></rule> 
+                <rule name="dateable" message="截止有效期必须是YYYY-MM-DD的日期格式"></rule>
+            </rules>
+        </column>
+        <column name="备注" code="priceRemark" type="String">
+        	<rules>   
+                <rule name="lengthable" min="0" max="1000" message="备注长度是0-1000字符"></rule>
+            </rules>
+        </column>
+   </entity>
+   <!-- 陆运-园区柜车 -->
+   <entity name="陆运-园区柜车" code="landPrice-9" >
+   		<column name="参数" code="no" type="String"></column>
+   		<column name="起运地" code="startAddress" type="String">  
+            <rules>   
+                <rule name="nullable" message="起运地不允许为空"></rule>  
+            </rules>                
+        </column>
+        <column name="目的地" code="endAddress" type="String">  
+            <rules>   
+                <rule name="nullable" message="目的地不允许为空"></rule>  
+            </rules>                
+        </column>
+        <column name="车期" code="carWeek" type="String">  
+            <rules>   
+                <rule name="nullable" message="航期不允许为空"></rule>
+                <rule name="valueable" value="周一/周二/周三/周四/周五/周六/周天" message="航期只能填(周一/周二/周三/周四/周五/周六/周天)"></rule>
+            </rules>                
+        </column>
+        <column name="车程（天）" code="drive" type="String">  
+        </column>
+        <column name="车队公司" code="fleetCompany" type="String">  
+        </column>
+        <column name="币种" code="priceUnitCode" type="String">
+        	<rules>   
+                <rule name="nullable" message="币种不允许为空"></rule>
+                <rule name="valueable" value="CNY/USD" message="币种只能填(CNY/USD)"></rule>
+            </rules>
+        </column>
+        
+        <column name="20GP" code="price" type="Double" list="priceDetails" defaultproperties="unitName=20GP">
+        	<rules>   
+                <rule name="numbleable" message="20GP必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="40GP" code="price" type="Double" list="priceDetails" defaultproperties="unitName=40GP">
+        	<rules>   
+                <rule name="numbleable" message="40GP必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="53GP" code="price" type="Double" list="priceDetails" defaultproperties="unitName=53GP">
+        	<rules>   
+                <rule name="numbleable" message="53GP必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="40HQ" code="price" type="Double" list="priceDetails" defaultproperties="unitName=40HQ">
+        	<rules>   
+                <rule name="numbleable" message="40HQ必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="45HQ" code="price" type="Double" list="priceDetails" defaultproperties="unitName=45HQ">
+        	<rules>   
+                <rule name="numbleable" message="45HQ必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="起始有效期" code="effectiveStartDate" type="Date">
+        	<rules>
+        		<rule name="nullable" message="起始有效期不允许为空"></rule> 
+                <rule name="dateable" message="起始有效期必须是YYYY-MM-DD的日期格式"></rule>
+            </rules>
+        </column>
+        <column name="截止有效期" code="effectiveEndDate" type="Date">
+        	<rules>
+        		<rule name="nullable" message="截止有效期不允许为空"></rule> 
+                <rule name="dateable" message="截止有效期必须是YYYY-MM-DD的日期格式"></rule>
+            </rules>
+        </column>
+        <column name="备注" code="priceRemark" type="String">
+        	<rules>   
+                <rule name="lengthable" min="0" max="1000" message="备注长度是0-1000字符"></rule>
+            </rules>
+        </column>
+   </entity>
+   
+   <!-- 陆运-国内吨车 -->
+   <entity name="陆运-国内吨车" code="landPrice-6" >
+   		<column name="参数" code="no" type="String"></column>
+   		<column name="起运地" code="startAddress" type="String">  
+            <rules>   
+                <rule name="nullable" message="起运地不允许为空"></rule>  
+            </rules>                
+        </column>
+        <column name="目的地" code="endAddress" type="String">  
+            <rules>   
+                <rule name="nullable" message="目的地不允许为空"></rule>  
+            </rules>                
+        </column>
+        <column name="车期" code="carWeek" type="String">  
+            <rules>   
+                <rule name="nullable" message="航期不允许为空"></rule>
+                <rule name="valueable" value="周一/周二/周三/周四/周五/周六/周天" message="航期只能填(周一/周二/周三/周四/周五/周六/周天)"></rule>
+            </rules>                
+        </column>
+        <column name="车程（天）" code="drive" type="String">  
+        </column>
+        <column name="车队公司" code="fleetCompany" type="String">  
+        </column>
+        <column name="币种" code="priceUnitCode" type="String">
+        	<rules>   
+                <rule name="nullable" message="币种不允许为空"></rule>
+                <rule name="valueable" value="CNY/USD" message="币种只能填(CNY/USD)"></rule>
+            </rules>
+        </column>
+        
+        <column name="1.5T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=1.5T">
+        	<rules>   
+                <rule name="numbleable" message="1.5T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="2.5T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=2.5T">
+        	<rules>   
+                <rule name="numbleable" message="2.5T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="3.5T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=3.5T">
+        	<rules>   
+                <rule name="numbleable" message="3.5T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="15T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=15T">
+        	<rules>   
+                <rule name="numbleable" message="15T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="20T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=20T">
+        	<rules>   
+                <rule name="numbleable" message="20T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="25T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=25T">
+        	<rules>   
+                <rule name="numbleable" message="25T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="35T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=35T">
+        	<rules>   
+                <rule name="numbleable" message="35T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="起始有效期" code="effectiveStartDate" type="Date">
+        	<rules>
+        		<rule name="nullable" message="起始有效期不允许为空"></rule> 
+                <rule name="dateable" message="起始有效期必须是YYYY-MM-DD的日期格式"></rule>
+            </rules>
+        </column>
+        <column name="截止有效期" code="effectiveEndDate" type="Date">
+        	<rules>
+        		<rule name="nullable" message="截止有效期不允许为空"></rule> 
+                <rule name="dateable" message="截止有效期必须是YYYY-MM-DD的日期格式"></rule>
+            </rules>
+        </column>
+        <column name="备注" code="priceRemark" type="String">
+        	<rules>   
+                <rule name="lengthable" min="0" max="1000" message="备注长度是0-1000字符"></rule>
+            </rules>
+        </column>
+   </entity>
+   
+   <!-- 陆运-港区吨车 -->
+   <entity name="陆运-港区吨车" code="landPrice-8" >
+   		<column name="参数" code="no" type="String"></column>
+   		<column name="起运地" code="startAddress" type="String">  
+            <rules>   
+                <rule name="nullable" message="起运地不允许为空"></rule>  
+            </rules>                
+        </column>
+        <column name="目的地" code="endAddress" type="String">  
+            <rules>   
+                <rule name="nullable" message="目的地不允许为空"></rule>  
+            </rules>                
+        </column>
+        <column name="车期" code="carWeek" type="String">  
+            <rules>   
+                <rule name="nullable" message="航期不允许为空"></rule>
+                <rule name="valueable" value="周一/周二/周三/周四/周五/周六/周天" message="航期只能填(周一/周二/周三/周四/周五/周六/周天)"></rule>
+            </rules>                
+        </column>
+        <column name="车程（天）" code="drive" type="String">  
+        </column>
+        <column name="车队公司" code="fleetCompany" type="String">  
+        </column>
+        <column name="币种" code="priceUnitCode" type="String">
+        	<rules>   
+                <rule name="nullable" message="币种不允许为空"></rule>
+                <rule name="valueable" value="CNY/USD" message="币种只能填(CNY/USD)"></rule>
+            </rules>
+        </column>
+        
+        <column name="0.3T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=0.3T">
+        	<rules>   
+                <rule name="numbleable" message="0.3T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="0.8T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=0.8T">
+        	<rules>   
+                <rule name="numbleable" message="0.8T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="1.5T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=1.5T">
+        	<rules>   
+                <rule name="numbleable" message="1.5T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="3T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=3T">
+        	<rules>   
+                <rule name="numbleable" message="3T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="5T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=5T">
+        	<rules>   
+                <rule name="numbleable" message="5T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="8T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=8T">
+        	<rules>   
+                <rule name="numbleable" message="8T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="10T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=10T">
+        	<rules>   
+                <rule name="numbleable" message="10T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="12T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=12T">
+        	<rules>   
+                <rule name="numbleable" message="12T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="起始有效期" code="effectiveStartDate" type="Date">
+        	<rules>
+        		<rule name="nullable" message="起始有效期不允许为空"></rule> 
+                <rule name="dateable" message="起始有效期必须是YYYY-MM-DD的日期格式"></rule>
+            </rules>
+        </column>
+        <column name="截止有效期" code="effectiveEndDate" type="Date">
+        	<rules>
+        		<rule name="nullable" message="截止有效期不允许为空"></rule> 
+                <rule name="dateable" message="截止有效期必须是YYYY-MM-DD的日期格式"></rule>
+            </rules>
+        </column>
+        <column name="备注" code="priceRemark" type="String">
+        	<rules>   
+                <rule name="lengthable" min="0" max="1000" message="备注长度是0-1000字符"></rule>
+            </rules>
+        </column>
+   </entity>
+   <!-- 陆运-园区吨车 -->
+   <entity name="陆运-园区吨车" code="landPrice-10" >
+   		<column name="参数" code="no" type="String"></column>
+   		<column name="起运地" code="startAddress" type="String">  
+            <rules>   
+                <rule name="nullable" message="起运地不允许为空"></rule>  
+            </rules>                
+        </column>
+        <column name="目的地" code="endAddress" type="String">  
+            <rules>   
+                <rule name="nullable" message="目的地不允许为空"></rule>  
+            </rules>                
+        </column>
+        <column name="车期" code="carWeek" type="String">  
+            <rules>   
+                <rule name="nullable" message="航期不允许为空"></rule>
+                <rule name="valueable" value="周一/周二/周三/周四/周五/周六/周天" message="航期只能填(周一/周二/周三/周四/周五/周六/周天)"></rule>
+            </rules>                
+        </column>
+        <column name="车程（天）" code="drive" type="String">  
+        </column>
+        <column name="车队公司" code="fleetCompany" type="String">  
+        </column>
+        <column name="币种" code="priceUnitCode" type="String">
+        	<rules>   
+                <rule name="nullable" message="币种不允许为空"></rule>
+                <rule name="valueable" value="CNY/USD" message="币种只能填(CNY/USD)"></rule>
+            </rules>
+        </column>
+        
+        <column name="0.3T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=0.3T">
+        	<rules>   
+                <rule name="numbleable" message="0.3T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="0.8T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=0.8T">
+        	<rules>   
+                <rule name="numbleable" message="0.8T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="1.5T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=1.5T">
+        	<rules>   
+                <rule name="numbleable" message="1.5T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="3T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=3T">
+        	<rules>   
+                <rule name="numbleable" message="3T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="5T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=5T">
+        	<rules>   
+                <rule name="numbleable" message="5T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="8T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=8T">
+        	<rules>   
+                <rule name="numbleable" message="8T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="10T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=10T">
+        	<rules>   
+                <rule name="numbleable" message="10T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="12T" code="price" type="Double" list="priceDetails" defaultproperties="unitName=12T">
+        	<rules>   
+                <rule name="numbleable" message="12T必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="起始有效期" code="effectiveStartDate" type="Date">
+        	<rules>
+        		<rule name="nullable" message="起始有效期不允许为空"></rule> 
+                <rule name="dateable" message="起始有效期必须是YYYY-MM-DD的日期格式"></rule>
+            </rules>
+        </column>
+        <column name="截止有效期" code="effectiveEndDate" type="Date">
+        	<rules>
+        		<rule name="nullable" message="截止有效期不允许为空"></rule> 
+                <rule name="dateable" message="截止有效期必须是YYYY-MM-DD的日期格式"></rule>
+            </rules>
+        </column>
+        <column name="备注" code="priceRemark" type="String">
+        	<rules>   
+                <rule name="lengthable" min="0" max="1000" message="备注长度是0-1000字符"></rule>
+            </rules>
+        </column>
+   </entity>
+   <!-- 通关 -->
+   <entity name="通关" code="billPrice" >
+   		<column name="参数" code="no" type="String"></column>
+   		<column name="产品名称" code="billPriceName" type="String">  
+            <rules>   
+                <rule name="nullable" message="产品名称不允许为空"></rule>  
+            </rules>                
+        </column>
+        <column name="进出口" code="tradeType" type="int" valuechange="出口-1/进口-0">  
+            <rules>   
+                <rule name="nullable" message="进出口不允许为空"></rule>
+                <rule name="valueable" value="进口/出口" message="进出口只能填(进口/出口)"></rule>
+            </rules>                
+        </column>
+        <column name="申报地海关" code="billPlaceCode" type="String">  
+        </column>
+        <column name="贸易方式" code="regulateWayCode" type="String">  
+        </column>
+        <column name="运输方式" code="transportWayCode" type="String">
+        </column>
+        <column name="币种" code="priceUnitCode" type="String">
+        	<rules>   
+                <rule name="nullable" message="币种不允许为空"></rule>
+                <rule name="valueable" value="CNY/USD" message="币种只能填(CNY/USD)"></rule>
+            </rules>
+        </column>
+        <column name="服务费" code="price" type="Double">
+        	<rules>
+        		<rule name="nullable" message="服务费不允许为空"></rule>
+                <rule name="numbleable" message="服务费必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="起始有效期" code="effectiveStartDate" type="Date">
+        	<rules>
+        		<rule name="nullable" message="起始有效期不允许为空"></rule> 
+                <rule name="dateable" message="起始有效期必须是YYYY-MM-DD的日期格式"></rule>
+            </rules>
+        </column>
+        <column name="截止有效期" code="effectiveEndDate" type="Date">
+        	<rules>
+        		<rule name="nullable" message="截止有效期不允许为空"></rule> 
+                <rule name="dateable" message="截止有效期必须是YYYY-MM-DD的日期格式"></rule>
+            </rules>
+        </column>
+        <column name="备注" code="priceRemark" type="String">
+        	<rules>   
+                <rule name="lengthable" min="0" max="1000" message="备注长度是0-1000字符"></rule>
+            </rules>
+        </column>
+   </entity>
+   
+   <!-- 海运整箱 -->
+   <entity name="海运整箱" code="shipPrice" >
+   		<column name="参数" code="no" type="String"></column>
+   		<column name="出发港" code="startAddressCode" type="String">  
+            <rules>   
+                <rule name="nullable" message="出发港不允许为空"></rule>  
+            </rules>                
+        </column>
+        <column name="目的港" code="endAddressCode" type="String">  
+            <rules>   
+                <rule name="nullable" message="目的港不允许为空"></rule>  
+            </rules>                
+        </column>
+        <column name="是否中转" code="isTransfer" type="int" valuechange="是-1/否-0">  
+            <rules>   
+                <rule name="nullable" message="是否中转不允许为空"></rule>
+                <rule name="valueable" value="是/否" message="是否中转只能填(是/否)"></rule>
+            </rules>                
+        </column>
+        <column name="中转地" code="addressCode" type="String" list="transferAddressList">  
+            <rules>   
+                <rule name="ifnullable" condition="isTransfer" value="是" message="中转地不允许为空"></rule>
+            </rules>                
+        </column>
+        <column name="船期" code="shipWeek" type="String">  
+            <rules>   
+                <rule name="nullable" message="船期不允许为空"></rule>
+                <rule name="valueable" value="周一/周二/周三/周四/周五/周六/周天" message="船期只能填(周一/周二/周三/周四/周五/周六/周天)"></rule>
+            </rules>                
+        </column>
+        <column name="航程（天）" code="voyage" type="String">  
+        </column>
+        <column name="船公司" code="shipCompany" type="String">  
+        </column>
+        <column name="币种" code="priceUnitCode" type="String">
+        	<rules>   
+                <rule name="nullable" message="币种不允许为空"></rule>
+                <rule name="valueable" value="CNY/USD" message="币种只能填(CNY/USD)"></rule>
+            </rules>
+        </column>
+        <column name="20GP" code="price" type="Double" list="priceDetails" defaultproperties="unitName=20GP">
+        	<rules>   
+                <rule name="numbleable" message="20GP必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="40GP" code="price" type="Double" list="priceDetails" defaultproperties="unitName=40GP">
+        	<rules>   
+                <rule name="numbleable" message="40GP必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="40HQ" code="price" type="Double" list="priceDetails" defaultproperties="unitName=40HQ">
+        	<rules>   
+                <rule name="numbleable" message="40HQ必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="45HQ" code="price" type="Double" list="priceDetails" defaultproperties="unitName=45HQ">
+        	<rules>   
+                <rule name="numbleable" message="45HQ必须是数字"></rule>
+            </rules>
+        </column>
+        <column name="起始有效期" code="effectiveStartDate" type="Date">
+        	<rules>
+        		<rule name="nullable" message="起始有效期不允许为空"></rule> 
+                <rule name="dateable" message="起始有效期必须是YYYY-MM-DD的日期格式"></rule>
+            </rules>
+        </column>
+        <column name="截止有效期" code="effectiveEndDate" type="Date">
+        	<rules>
+        		<rule name="nullable" message="截止有效期不允许为空"></rule> 
+                <rule name="dateable" message="截止有效期必须是YYYY-MM-DD的日期格式"></rule>
+            </rules>
+        </column>
+        <column name="备注" code="priceRemark" type="String">
+        	<rules>   
+                <rule name="lengthable" min="0" max="1000" message="备注长度是0-1000字符"></rule>
+            </rules>
+        </column>
+   </entity>
+   
+   
+   <!-- 车牌信息导入 -->
+   <entity name="车牌信息" code="plate" >
+   		<column name="*委托单号" code="jobid" type="String">
+   			<rules>   
+                <rule name="nullable" message="委托单号不允许为空"></rule>
+            </rules>
+   		</column>
+   		<column name="*运输车队" code="fleetCompany" type="String">  
+            <rules>   
+                <rule name="nullable" message="运输车队不允许为空"></rule>  
+            </rules>                
+        </column>
+   		<column name="*大陆车牌" code="plateNumber" type="String">  
+            <rules>   
+                <rule name="nullable" message="大陆车牌不允许为空"></rule>  
+            </rules>                
+        </column>
+   		<column name="*大陆司机" code="driver" type="String">  
+            <rules>   
+                <rule name="nullable" message="大陆司机不允许为空"></rule>
+            </rules>                
+        </column>
+   		<column name="*司机电话" code="driverNumber" type="Integer">  
+            <rules>   
+                <rule name="nullable" message="司机电话不允许为空"></rule>  
+                <rule name="numbleable" message="司机电话必须为数字"></rule>  
+            </rules>                
+        </column>
+        <column name="香港车牌" code="hkPlateNumber" type="String">  
+        </column>
+        <column name="香港司机" code="hkDriver" type="String">  
+        </column>
+        <column name="港司机电话" code="hkMobile" type="Integer">
+        	<rules>
+                <rule name="numbleable" message="港司机电话必须为数字"></rule>  
+            </rules>
+        </column>
+        <column name="HAWE/SO#" code="hawe" type="String">
+        </column>
+        <column name="出境关别" code="customsPort" type="String">  
+        </column>
+        <column name="离境口岸" code="departurePort" type="String">  
+        </column>
+        <column name="转关口岸" code="clearancePort" type="String">
+        </column>
+        <column name="截放行条时间" code="deadline" type="Date2"> <!--  Date2 date2able 取值范围  yyyy-MM-dd hh:mm:ss    Date  dateable 取值范围 yyyy-MM-dd -->
+        	<rules>
+                <rule name="date2able" message="截放行条时间必须是YYYY-MM-DD HH:mm:ss的日期格式"></rule>
+            </rules>
+        </column>
+   </entity>
+   
+   <!-- 用户导入 -->
+   <entity name="用户导入" code="userImport" >
+   		<column name="手机号" code="mobile" type="String">
+   			<rules>   
+                <rule name="nullable" message="手机号不允许为空"></rule>
+            </rules>
+   		</column>
+   		<column name="账号" code="loginId" type="String">  
+            <rules>   
+                <rule name="nullable" message="账号不允许为空"></rule>  
+            </rules>                
+        </column>
+   		<column name="姓名" code="userName" type="String">  
+            <rules>   
+                <rule name="nullable" message="姓名不允许为空"></rule>  
+            </rules>                
+        </column>
+   		<column name="邮箱" code="email" type="String">  
+            <rules>   
+                <rule name="nullable" message="邮箱不允许为空"></rule>
+            </rules>                
+        </column>
+        <column name="公司名称" code="companyName" type="String">  
+            <rules>   
+                <rule name="nullable" message="公司名称不允许为空"></rule>
+            </rules>                
+        </column>
+        <column name="企业简称" code="shortName" type="String">
+            <rules>
+            	<rule name="nullable" message="企业简称不允许为空"></rule>
+            </rules>
+        </column>
+   		<column name="供应商" code="providerName" type="String">  
+        </column>
+   </entity>
+   
+   <!-- 车牌导入 -->
+   <entity name="车牌导入" code="vehicleImport" >
+   		<column name="*企业全称" code="companyName" type="String">
+   			<rules>   
+                <rule name="nullable" message="企业全称不允许为空"></rule>
+                <rule name="lengthable" max = "50" message="企业全称不能超过50字符"></rule>
+            </rules>
+   		</column>
+   		<column name="*内地车牌" code="carNumber" type="String">  
+            <rules>   
+                <rule name="nullable" message="内地车牌不允许为空"></rule>
+                <rule name="lengthable" max = "10" message="内地车牌不能超过10字符"></rule>  
+            </rules>                
+        </column>
+   		<column name="*是否中港车" code="isHk" type="String">  
+            <rules>   
+                <rule name="nullable" message="是否中港车不允许为空"></rule>  
+            </rules>                
+        </column>
+   		<column name="香港车牌" code="hkCarNumber" type="String">
+   			<rules>   
+                <rule name="lengthable" max = "10" message="香港车牌不能超过10字符"></rule>  
+            </rules>  
+        </column>
+        <column name="*车型" code="carMode" type="String">  
+            <rules>   
+                <rule name="nullable" message="车型不允许为空"></rule>
+            </rules>                
+        </column>
+        <column name="*载量" code="capacity" type="String">
+            <rules>
+            	<rule name="nullable" message="载量不允许为空"></rule>
+            </rules>
+        </column>
+   		<column name="*是否海关备案车辆" code="isRecord" type="String">
+            <rules>
+            	<rule name="nullable" message="是否海关备案车辆不允许为空"></rule>
+            </rules>
+        </column>
+        <column name="海关备案编码" code="recordCode" type="String">
+        	<rules>   
+                <rule name="lengthable" max = "20" message="海关备案编码不能超过20字符"></rule>  
+            </rules>  
+        </column>
+        <column name="*是否危险品运输备案车辆" code="hasFile" type="String">
+            <rules>
+            	<rule name="nullable" message="是否危险品运输备案车辆不允许为空"></rule>
+            </rules>
+        </column>
+        <column name="*是否装GPS" code="hasGps" type="String">
+            <rules>
+            	<rule name="nullable" message="是否装GPS不允许为空"></rule>
+            </rules>
+        </column>
+   </entity>
+   
+   <!-- 司机导入 -->
+   <entity name="司机导入" code="driverImport" >
+   		<column name="*企业全称" code="companyName" type="String">
+   			<rules>   
+                <rule name="nullable" message="企业全称不允许为空"></rule>
+                <rule name="lengthable" max = "50" message="企业全称不能超过50字符"></rule>
+            </rules>
+   		</column>
+   		<column name="*司机姓名" code="name" type="String">  
+            <rules>   
+                <rule name="nullable" message="司机姓名不允许为空"></rule>  
+                <rule name="lengthable" max = "20" message="司机姓名不能超过20字符"></rule>
+            </rules>                
+        </column>
+   		<column name="*手机号码" code="mobile" type="String">  
+            <rules>   
+                <rule name="nullable" message="手机号码不允许为空"></rule>
+                <rule name="lengthable" max = "20" message="手机号码不能超过20字符"></rule>  
+            </rules>                
+        </column>
+   		<column name="*是否海关备案司机" code="isRecord" type="String">
+            <rules>
+            	<rule name="nullable" message="是否海关备案司机不允许为空"></rule>
+            </rules>
+        </column>
+        <column name="驾驶员编码" code="driverCode" type="String">
+        	<rules>   
+                <rule name="lengthable" max = "20" message="驾驶员编码不能超过20字符"></rule>  
+            </rules>  
+        </column>
+        <column name="*是否危险货物运输从业资格证" code="hasFile" type="String">
+            <rules>
+            	<rule name="nullable" message="是否危险货物运输从业资格证不允许为空"></rule>
+            </rules>
+        </column>
+   </entity>
+   
+   <!-- 司机绑定关系导入 -->
+   <entity name="司机绑定" code="driverCompanyImport" >
+   		<column name="*企业全称" code="companyName" type="String">
+   			<rules>   
+                <rule name="nullable" message="企业全称不允许为空"></rule>
+                <rule name="lengthable" max = "50" message="企业全称不能超过50字符"></rule>
+            </rules>
+   		</column>
+   		<column name="*手机号码" code="mobile" type="String">  
+            <rules>   
+                <rule name="nullable" message="手机号码不允许为空"></rule>  
+                <rule name="lengthable" max = "20" message="手机号码不能超过20字符"></rule>
+            </rules>                
+        </column>
+   </entity>
+   
+   <!-- 服务商导入 -->
+   <entity name="服务商导入" code="serviceProviderImport" >
+   		<column name="*公司全称" code="companyName" type="String">  
+            <rules>   
+                <rule name="nullable" message="公司全称不允许为空"></rule>
+                <rule name="lengthable" max = "50" message="公司全称不能超过50字符"></rule>
+            </rules>                
+        </column>
+        <column name="*企业简称" code="shortName" type="String">
+            <rules>
+            	<rule name="nullable" message="企业简称不允许为空"></rule>
+            	<rule name="lengthable" max = "10" message="企业简称不能超过10字符"></rule>
+                <rule name="loginName" message="企业简称只能使用字母数字下划线组合"></rule>
+            </rules>
+        </column>
+        <column name="*企业联系人" code="businessName" type="String">  
+            <rules>   
+                <rule name="nullable" message="企业联系人不允许为空"></rule>
+                <rule name="lengthable" max = "20" message="企业联系人不能超过20字符"></rule>  
+            </rules>                
+        </column>
+   		<column name="*企业联系人手机号" code="mobile" type="String">
+   			<rules>   
+                <rule name="nullable" message="企业联系人手机号不允许为空"></rule>
+                <rule name="phone" message="企业联系人手机号不合法"></rule>
+            </rules>
+   		</column>
+   		<column name="*企业邮箱" code="email" type="String">  
+            <rules>   
+                <rule name="nullable" message="邮箱不允许为空"></rule>
+                <rule name="lengthable" max = "20" message="邮箱不能超过20字符"></rule>
+                <rule name="email" message="企业邮箱不合法"></rule>
+            </rules>                
+        </column>
+   		<column name="海关编码" code="companyCode" type="String">  
+   			<rules>
+            	<rule name="lengthable" max = "20" message="海关编码不能超过20字符"></rule>
+            </rules>
+        </column>
+   </entity>
+   
+    <!-- 供应商绑定  -->
+    <entity name="供应商绑定" code="providerImport" >
+        <column name="*公司全称" code="name" type="String">
+            <rules>
+                <rule name="nullable" message="公司全称不允许为空"></rule>
+                <rule name="lengthable" max = "50" message="公司全称不能超过50字符"></rule>
+            </rules>
+        </column>
+        <column name="*所属货代（简称）" code="spShortName" type="String">
+            <rules>
+                <rule name="nullable" message="所属货代（简称）不允许为空"></rule>
+                <rule name="lengthable" max = "10" message="所属货代（简称）不能超过10字符"></rule>
+            </rules>
+        </column>
+        <column name="*是否生成费用" code="needExpenses" type="String">
+            <rules>
+                <rule name="nullable" message="是否生成费用不允许为空"></rule>
+            </rules>
+        </column>
+    </entity>
+   
+</excel>
