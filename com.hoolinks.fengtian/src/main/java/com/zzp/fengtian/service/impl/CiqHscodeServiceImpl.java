@@ -89,7 +89,7 @@ public class CiqHscodeServiceImpl extends ServiceImpl<CiqHscodeMapper, CiqHscode
             String sql = "(" + convertValue(ciqCode) + ", " + convertValue(hsCode) + ", " + convertValue(updateDate) + ", " + convertValue(createDate) + ", " + convertValue(name) + ", " + convertValue(hsType) + ", " + convertValue(hsName) + ");";
             sqls.add(prefix + sql);
         }
-        File outFile = new File("E:\\fengtianTemp\\丰田系统更新ciqHscode2.sql");
+        File outFile = new File("E:\\fengtianTemp\\丰田系统更新ciqHscode202101020739.sql");
         try {
             FileUtils.writeLines(outFile, sqls, true);
         } catch (Exception e) {
