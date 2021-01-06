@@ -1,6 +1,7 @@
 package com.util.http;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -17,6 +18,8 @@ import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.util.convert.ConvertUtil;
 import com.util.sort.MapSort;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * http请求工具类
@@ -60,16 +63,22 @@ public class HttpRequest {
 //        }
 
 
-        Map<String, String> requestPropertys = new HashMap<String, String>();
-        requestPropertys.put("Content-Type", "application/json");
+//        Map<String, String> requestPropertys = new HashMap<String, String>();
+//        requestPropertys.put("Content-Type", "application/json");
+//
+//        Map<String, Object> params = new HashMap<String, Object>();
+//        params.put("userUid", "U1591150157277");
+//        params.put("modulesName", "scm/importPlannedOrder/checkList");
+//
+//        String result = HttpRequest.sendPost("https://test-bff.hoolinks.com/generateHash/save", JSON.toJSONString(params), requestPropertys);
+//        System.out.println(result);
 
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("userUid", "U1591150157277");
-        params.put("modulesName", "scm/importPlannedOrder/checkList");
-
-        String result = HttpRequest.sendPost("https://test-bff.hoolinks.com/generateHash/save", JSON.toJSONString(params), requestPropertys);
-        System.out.println(result);
-
+        try {
+            String filePath = downloadFile("https://qa-fc.hoolinks.com/qa/scm/202101/06/进货计划商品信息导入-20210106112934.xlsx", "E:\\scptemp");
+            System.out.println(filePath);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 	}
 	
@@ -355,6 +364,58 @@ public class HttpRequest {
     public static String getSignBySHA1(String appId, String appSecret, String time) {
         String sign = SHA1SignUtil.createSignature(appId, appSecret, time);
         return sign;
+    }
+
+    /**
+     * 根据url下载文件
+     * @param fileUrl 文件url
+     * @param filePath 存储文件的位置
+     * @return
+     * @throws Exception
+     */
+    public static String downloadFile(String fileUrl, String filePath) throws Exception{
+        if (StringUtils.isBlank(fileUrl)) {
+            throw new NullPointerException("fileUrl is not blank");
+        }
+        try {
+            filePath = filePath + File.separator + getDownloadFileName(fileUrl);
+            String encodeUrl = encodeDownloadFileUrl(fileUrl);
+            URL url = new URL(encodeUrl);
+            File file = new File(filePath);
+
+            FileUtils.copyURLToFile(url, file, 5000, 5000);
+            return filePath;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static String getDownloadFileName(String fileUrl) {
+        if (StringUtils.isBlank(fileUrl)) {
+            return null;
+        }
+        String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
+        return fileName;
+    }
+
+    private static String encodeDownloadFileUrl(String fileUrl) {
+        if (StringUtils.isBlank(fileUrl)) {
+            return null;
+        }
+        int fileNameIndex = fileUrl.lastIndexOf("/");
+        String fileName = fileUrl.substring(fileNameIndex + 1);
+        String urlPrefix = fileUrl.substring(0, fileNameIndex + 1);
+        String encodeFileName = null;
+        try {
+            encodeFileName = URLEncoder.encode(fileName, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        if (StringUtils.isNotBlank(encodeFileName)) {
+            return urlPrefix + encodeFileName;
+        }
+        return fileUrl;
     }
 
 }
