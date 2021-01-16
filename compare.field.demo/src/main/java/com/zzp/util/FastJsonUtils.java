@@ -1,7 +1,10 @@
 package com.zzp.util;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.zzp.beans.Teacher;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Map;
@@ -124,9 +127,32 @@ public class FastJsonUtils {
         return false;
     }
 
+    /**
+     * 对象String类型如果为null则会转换成""
+     * @param t 对象实例
+     * @param clazz 对象实例的类对象
+     * @return
+     */
+    public static <T> T writeNullStringAsEmpty(T t, Class<T> clazz) {
+        if (t == null) {
+            return null;
+        }
+
+        String jsonStr = JSON.toJSONString(t,
+                SerializerFeature.WriteNullStringAsEmpty, // 字符类型字段如果为null,输出为"",而非null
+                SerializerFeature.WriteMapNullValue // 是否输出值为null的字段
+        );
+        return JSON.parseObject(jsonStr, clazz);
+    }
+
     public static void main(String[] args) {
         String jsonStr = "[{\"companyCode\":\"4401482019\",\"goodsAttrName\":\"正常\",\"submitCustoms\":\"0109\",\"isImport\":\"I\",\"desCountry\":\"ATA\",\"shippingType\":\"2\",\"desCountryValue\":\"南极洲\",\"list\":[{\"BBB\":\"bbb\",\"list\":[{\"DDD\":\"ddd\"},{\"CCC\":\"ccc\"}]},{\"BBB\":\"bbb\",\"zzz\":[{\"CCC\":\"ddz\",\"DDD\":\"ddd\"},{\"CCC\":\"ccc\"}]}],\"usesValue\":\"其他\",\"goodsAttr\":\"19\",\"shippingTypeValue\":\"水路运输\",\"createTime\":1602655697000,\"headSetingName\":\"zzp进口报关单模板101401\",\"uses\":\"99\",\"createrId\":\"9900\",\"id\":\"402848a37524cef7017525b93b62007c\",\"submitCustomsValue\":\"机场旅检\"},{\"companyCode\":\"4401482019\",\"goodsAttrName\":\"正常\",\"submitCustoms\":\"0109\",\"isImport\":\"I\",\"desCountry\":\"ATA\",\"shippingType\":\"2\",\"desCountryValue\":\"南极洲\",\"list\":[{\"BBB\":\"bbb\",\"list\":[{\"DDD\":\"ddd\"},{\"CCC\":\"ccc\"}]},{\"BBB\":\"bbb\",\"zzz\":[{\"CCC\":\"ddz\",\"DDD\":\"ddd\"},{\"CCC\":\"ccc\"}]}],\"usesValue\":\"其他\",\"goodsAttr\":\"19\",\"shippingTypeValue\":\"水路运输\",\"createTime\":1602655697000,\"headSetingName\":\"zzp进口报关单模板101401\",\"uses\":\"99\",\"createrId\":\"9900\",\"id\":\"402848a37524cef7017525b93b62007c\",\"submitCustomsValue\":\"机场旅检\"}]";
         System.out.println(filterBlankValue(jsonStr));
+
+        Teacher teacher = new Teacher();
+        teacher.setAge(23);
+        teacher = writeNullStringAsEmpty(teacher, Teacher.class);
+        System.out.println("aaa");
     }
 
 }
