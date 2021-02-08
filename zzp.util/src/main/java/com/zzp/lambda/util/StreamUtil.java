@@ -1,5 +1,6 @@
 package com.zzp.lambda.util;
 
+import com.block.queue.User;
 import com.google.common.base.Splitter;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -73,6 +74,26 @@ public class StreamUtil {
             return Stream.of(list1, list2).flatMap(Collection::stream).distinct().collect(Collectors.toList());
         }
         return Stream.of(list1, list2).flatMap(Collection::stream).collect(Collectors.toList());
+    }
+
+    /**
+     * 对List进行排序
+     * @param users user列表
+     * @param sortType 排序类型 ASC为升序，DESC为降序，如果为null则不排序
+     * @return
+     */
+    public static List<User> sort(List<User> users, String sortType) {
+        if (CollectionUtils.isEmpty(users)) {
+            return users;
+        }
+
+        if ("ASC".equals(sortType)) {
+            users.sort((a, b) -> a.getAge() - b.getAge());
+        } else if ("DESC".equals(sortType)) {
+            users.sort((a, b) -> b.getAge() - a.getAge());
+        }
+
+        return users;
     }
 
 }
