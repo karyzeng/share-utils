@@ -78,7 +78,7 @@ public class CompletableFutureTest {
             System.out.println("得到" + r + "，开始任务2");
         });
 
-        t2.join();
+//        t2.join();
     }
 
     /**
@@ -96,10 +96,16 @@ public class CompletableFutureTest {
             System.out.println(Thread.currentThread().getName() + "-拿到任务1的返回结果：" + r);
             return "2";
         }, pool2).thenApplyAsync((r) -> {
+            System.out.println(1 / 0);
             System.out.println(Thread.currentThread().getName() + "-拿到任务2的返回结果：" + r);
             return 3;
-        }, pool3);
+        }, pool3).exceptionally((e) -> {
+            e.printStackTrace();
+            return -1;
+        });
 
-        System.out.println(Thread.currentThread().getName() + "-最终的返回结果：" + t1.join());
+        System.out.println("主方法结束");
+
+//        System.out.println(Thread.currentThread().getName() + "-最终的返回结果：" + t1.join());
     }
 }
