@@ -42,4 +42,13 @@ public class ThreadPoolUtils {
         return newThreadPoolExecutor(5, 10, 60 * 1000L, 100, "Custom-Thread-Pool");
     }
 
+    /**
+     * 自定义线程池
+     * @param threadPoolName 线程池名称
+     * @return
+     */
+    public static ExecutorService newThreadPoolExecutor(String threadPoolName) {
+        return newThreadPoolExecutor(5, 10, 60 * 1000L, 100, threadPoolName);
+    }
+
 }
