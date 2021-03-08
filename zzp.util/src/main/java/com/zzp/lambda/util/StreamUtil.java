@@ -35,7 +35,7 @@ public class StreamUtil {
         users.add(user1);
 
         User user2 = new User();
-        user2.setName("zzz");
+        user2.setName("zzp");
         users.add(user2);
 
         List<String> userNames = convert(users);
