@@ -46,7 +46,7 @@ public class GuardedSuspension<T> {
         lock.lock();
         try {
             while (!p.test(obj)) {
-                done.await(1, TimeUnit.SECONDS);
+                done.await(timeout, TimeUnit.SECONDS);
             }
         } catch (Exception e) {
             e.printStackTrace();
