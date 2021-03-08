@@ -5,6 +5,7 @@ import com.google.common.base.Splitter;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,6 +28,19 @@ public class StreamUtil {
         String str2 = "9,10,11";
         List<Integer> mergeList = mergeList(convertIntList(str1, ","), convertIntList(str2, ","), true);
         System.out.println(mergeList);
+
+        List<User> users = new ArrayList<User>();
+        User user1 = new User();
+        user1.setName("xxx");
+        users.add(user1);
+
+        User user2 = new User();
+        user2.setName("zzz");
+        users.add(user2);
+
+        List<String> userNames = convert(users);
+        System.out.println(StringUtils.join(userNames, ","));
+
     }
 
     /**
@@ -94,6 +108,20 @@ public class StreamUtil {
         }
 
         return users;
+    }
+
+    /**
+     * 获取users中所有元素的name并转成List
+     * @param users user列表
+     * @return
+     */
+    public static List<String> convert(List<User> users) {
+        if (CollectionUtils.isEmpty(users)) {
+            return null;
+        }
+
+        // Collectors.toList()转换成List，Collectors.toSet()转换成Set，等等等等
+        return users.stream().map(user -> user.getName()).collect(Collectors.toList());
     }
 
 }
