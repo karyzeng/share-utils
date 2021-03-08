@@ -45,11 +45,6 @@ public class ProducerConsumerBatchConsume {
             for (int i = 0; i < 10; i++) {
                 String task = UUID.randomUUID().toString().replace("-" , "");
                 taskQueue.add(task);
-//                try {
-//                    Thread.sleep(100);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
             }
         });
     }
