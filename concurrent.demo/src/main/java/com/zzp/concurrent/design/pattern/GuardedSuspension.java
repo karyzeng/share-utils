@@ -13,7 +13,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Predicate;
 
 /**
- * @Description Guarded Suspension 多线程版本if
+ * @Description Guarded Suspension 多线程版本if（必须要等待条件完成）
  * @Author karyzeng
  * @since 2021.03.08
  **/
