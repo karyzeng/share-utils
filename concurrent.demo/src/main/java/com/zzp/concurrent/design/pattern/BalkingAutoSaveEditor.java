@@ -43,15 +43,26 @@ public class BalkingAutoSaveEditor {
     static class Test {
 
         public static void main(String[] args) throws InterruptedException {
-            BalkingAutoSaveEditor autoSaveEditor = new BalkingAutoSaveEditor();
-            autoSaveEditor.startAutoSave();
-            ExecutorService es = ThreadPoolUtils.newThreadPoolExecutor("修改线程");// 用来执行修改任务的线程
+//            BalkingAutoSaveEditor autoSaveEditor = new BalkingAutoSaveEditor();
+//            autoSaveEditor.startAutoSave();
+//            ExecutorService es = ThreadPoolUtils.newThreadPoolExecutor("修改线程");// 用来执行修改任务的线程
+//
+//            Thread.sleep(2000);
+//
+//            es.execute(() -> {
+//                autoSaveEditor.change();
+//            });
+            long now = System.nanoTime();
+            System.out.println("now：" + now);
 
             Thread.sleep(2000);
 
-            es.execute(() -> {
-                autoSaveEditor.change();
-            });
+            long end = System.nanoTime();
+            System.out.println("end：" + now);
+
+            long interval = 1000_000_000;
+
+            System.out.println("计算结果：" + (end - now)/interval);
         }
 
     }
