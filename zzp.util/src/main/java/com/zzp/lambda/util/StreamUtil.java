@@ -124,4 +124,12 @@ public class StreamUtil {
         return users.stream().map(user -> user.getName()).collect(Collectors.toList());
     }
 
+    public static List<User> differenceSet(List<User> list1, List<User> list2) {
+        // 差集 (list1 - list2)
+        List<User> reduce1 = list1.stream().filter(item -> !list2.contains(item)).collect(Collectors.toList());
+        System.out.println("---得到差集 reduce1 (list1 - list2)---");
+        reduce1.parallelStream().forEach(System.out::println);
+        return null;
+    }
+
 }
