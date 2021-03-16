@@ -124,6 +124,12 @@ public class StreamUtil {
         return users.stream().map(user -> user.getName()).collect(Collectors.toList());
     }
 
+    /**
+     * 差集list1 - list2
+     * @param list1
+     * @param list2
+     * @return
+     */
     public static List<User> differenceSet(List<User> list1, List<User> list2) {
         // 差集 (list1 - list2)
         List<User> reduce1 = list1.stream().filter(item -> !list2.contains(item)).collect(Collectors.toList());
