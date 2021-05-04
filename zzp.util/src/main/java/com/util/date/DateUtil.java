@@ -53,6 +53,7 @@ public class DateUtil {
 //		System.out.println(getNumDayDate("2020-06-01", 6));
 //		System.out.println(JSON.toJSONString(getDateStartAndEndList("2020-06-23", "2020-06-23", 6)));
 //		System.out.println(JSON.toJSONString(getBeforeNowDay(6, false)));
+		System.out.println(judgeInterval("2021-04-13", "2022-04-12", "2022-04-14", "2022-04-22", FORMAT_yyyy_MM_dd));
 	}
 	
 	/**
@@ -190,10 +191,7 @@ public class DateUtil {
 
 		Date date = null;
 		try {
-			SimpleDateFormat sdf = new SimpleDateFormat(format);
-			if (!StringUtil.isBlank(dateString)) {
-				date = sdf.parse(dateString);
-			}
+			date = DateUtils.parseDate(dateString, format);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -358,6 +356,38 @@ public class DateUtil {
 		map.put("dateStart", startDate);
 		map.put("dateEnd", endDate + " 23:59:59");
 		return map;
+	}
+
+	/**
+	 * 判断两个时间区间是否有交集
+	 * @param s1 第一个时间段开始时间
+	 * @param e1 第一个时间段结束时间
+	 * @param s2 第二个时间段开始时间
+	 * @param e2 第二个时间段结束时间
+	 * @return boolean true表示有交集，false表示没有交集
+	 */
+	public static boolean judgeInterval(Date s1, Date e1, Date s2, Date e2) {
+		long s1Timestamp = s1.getTime();
+		long e1Timestamp = e1.getTime();
+		long s2Timestamp = s2.getTime();
+		long e2Timestamp = e2.getTime();
+		return (e1Timestamp < s2Timestamp || e2Timestamp < s1Timestamp) ? false : true;
+	}
+
+	/**
+	 * 判断两个时间区间是否有交集
+	 * @param s1 第一个时间段开始时间
+	 * @param e1 第一个时间段结束时间
+	 * @param s2 第二个时间段开始时间
+	 * @param e2 第二个时间段结束时间
+	 * @return boolean true表示有交集，false表示没有交集
+	 */
+	public static boolean judgeInterval(String s1, String e1, String s2, String e2, String format) {
+		Date sd1 = convertStringToDate(s1, format);
+		Date ed1 = convertStringToDate(e1, format);
+		Date sd2 = convertStringToDate(s2, format);
+		Date ed2 = convertStringToDate(e2, format);
+		return judgeInterval(sd1, ed1, sd2, ed2);
 	}
 
 }
