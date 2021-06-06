@@ -126,8 +126,16 @@ public class StringUtils {
         }
     }
 
-
-
+    /**
+     * ascii码转换成对应的字符串
+     *
+     * @param asciiValue ascii值
+     * @return {@link String}
+     */
+    public static String asciiToString(int asciiValue) {
+        char asciiChar = (char) asciiValue;
+        return String.valueOf(asciiChar);
+    }
 
 
     public static void main(String[] args) {
@@ -140,6 +148,8 @@ public class StringUtils {
         String invoiceNo = "/CK发票号001/";
         System.out.println(invoiceNo);
         System.out.println(deleteFirstAndLastChar(invoiceNo, "/"));
+
+        System.out.println(asciiToString(65 + 2 + 0));
 
     }
 

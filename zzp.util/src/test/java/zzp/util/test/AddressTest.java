@@ -2,12 +2,14 @@ package zzp.util.test;
 
 import com.alibaba.fastjson.JSON;
 import junit.framework.Assert;
+import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AddressTest {
 
@@ -45,12 +47,13 @@ public class AddressTest {
         System.out.println("j3+"+j3+"\nSystem.identityHashCode(j3)"+System.identityHashCode(j3)+"\nj3 = j4? " + (j3 == j4));
 
         List<User> list = new ArrayList<User>();
-//        User user = new User();
-//        user.setId(1);
-//        list.add(user);
-//        User user2 = new User();
-//        user2.setId(2);
-//        list.add(user2);
+        User user = new User();
+        user.setId(1);
+        user.setUserName("zzp");
+        list.add(user);
+        User user2 = new User();
+        user2.setId(2);
+        list.add(user2);
         System.out.println(JSON.toJSONString(list));
 
         String str = "aabb,,,";
@@ -76,6 +79,18 @@ public class AddressTest {
         String json3 = "[{\\\"index\\\":1,\\\"name\\\":\\\"品牌类型\\\",\\\"type\\\":1}]";
         System.out.println(json2.replaceAll("\"", "\\\\\""));
         System.out.println(json3);
+
+        String fileName = "金甲卡卡龙zzp0988.ZIPP";
+        System.out.println(fileName.startsWith("52"));
+
+        List<String> userNames = list.stream().filter(u -> StringUtils.isNotBlank(u.getUserName())).map(User::getUserName).collect(Collectors.toList());
+        System.out.println(userNames);
+
+        System.out.println((char) Integer.parseInt("65"));
+
+        System.out.println("E577019A0006".substring(1, 5));
+
+        System.out.println(new BigDecimal("1266600.345000").stripTrailingZeros().toPlainString());
 
     }
 }
