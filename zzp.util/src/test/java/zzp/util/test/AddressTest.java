@@ -1,6 +1,7 @@
 package zzp.util.test;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import junit.framework.Assert;
 import org.apache.commons.lang3.StringUtils;
 
@@ -92,5 +93,9 @@ public class AddressTest {
 
         System.out.println(new BigDecimal("1266600.345000").stripTrailingZeros().toPlainString());
 
+        String jsonStr = JSON.toJSONString("{\"errCode\":0,\"errMsg\":\"[]\",\"rawData\":\"{\\\"Message\\\":\\\"\\\",\\\"Code\\\":200,\\\"Data\\\":{\\\"success\\\":true,\\\"message\\\":[]}}\",\"requestSuccess\":true}");
+        jsonStr = JSON.parseObject(jsonStr, String.class);//有这个处理即可
+        JSONObject jsonObject = JSON.parseObject(jsonStr);
+        System.out.println("---");
     }
 }
