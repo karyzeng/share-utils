@@ -6,6 +6,7 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateParser;
 import org.apache.commons.lang3.time.DateUtils;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class DateUtil {
 	public static String FORMAT_yyMMdd = "yyMMdd";
 	public static String FORMAT_HH_mm_ss = "HH:mm:ss";
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 //		System.out.println(getLastMonthFirstDay());
 //		System.out.println(getLastMonthLastDay());
 		System.out.println(getDayByNum("2020-10-27", 0));
@@ -54,6 +55,9 @@ public class DateUtil {
 //		System.out.println(JSON.toJSONString(getDateStartAndEndList("2020-06-23", "2020-06-23", 6)));
 //		System.out.println(JSON.toJSONString(getBeforeNowDay(6, false)));
 		System.out.println(judgeInterval("2021-04-13", "2022-04-12", "2022-04-14", "2022-04-22", FORMAT_yyyy_MM_dd));
+		System.out.println(hourToSeconds(new BigDecimal("1.50000")));
+		Date date = DateUtils.parseDate("2021-06-09 13:41:25", "yyyy-MM-dd HH:mm:ss");
+		System.out.println(addSecondToDate(date, hourToSeconds(new BigDecimal("1.50000"))));
 	}
 	
 	/**
@@ -389,5 +393,38 @@ public class DateUtil {
 		Date ed2 = convertStringToDate(e2, format);
 		return judgeInterval(sd1, ed1, sd2, ed2);
 	}
+
+	/**
+	 * 小时转换成秒
+	 *
+	 * @param hour 小时
+	 * @return int
+	 */
+	public static int hourToSeconds(BigDecimal hour) {
+		if (hour == null) {
+			return 0;
+		}
+		BigDecimal seconds = hour.multiply(new BigDecimal("3600"));
+		return seconds.intValue();
+	}
+
+	/**
+	 * 时间添加秒数
+	 * @param date date 时间
+	 * @param seconds 秒数，正数为未来的秒数，负数为过去的秒数
+	 * @return String
+	 */
+	public static String addSecondToDate(Date date, Integer seconds) {
+		try {
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			calendar.add(Calendar.SECOND, seconds);
+			return DateFormatUtils.format(calendar.getTime(), FORMAT_yyyy_MM_dd_HH_mm_ss);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 
 }
