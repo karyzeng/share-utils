@@ -1,6 +1,10 @@
 package com.string.util;
 
+import com.google.common.base.Splitter;
+
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -137,6 +141,71 @@ public class StringUtils {
         return String.valueOf(asciiChar);
     }
 
+    /**
+     * 添加字符串到字符串中，且去重
+     *
+     * @param str       原字符串
+     * @param appendStr 附加str
+     * @param separator 分隔符
+     * @return {@link String}
+     */
+    public static String append(String str, String appendStr, String separator) {
+        return append(str, appendStr, separator, true);
+    }
+
+    /**
+     * 添加字符串到字符串中
+     *
+     * @param str       原字符串
+     * @param appendStr 附加str
+     * @param separator 分隔符
+     * @param distinct  是否去重，true表示去重，false表示不去重
+     * @return {@link String}
+     */
+    public static String append(String str, String appendStr, String separator, boolean distinct) {
+        return append(str, appendStr, separator, distinct, false);
+    }
+
+    /**
+     * 添加字符串到字符串中
+     *
+     * @param str       原字符串
+     * @param appendStr 附加str
+     * @param separator 分隔符
+     * @param distinct  是否去重，true表示去重，false表示不去重
+     * @param appendHead 是否添加在头部，true表示是，false表示添加在尾部
+     * @return {@link String}
+     */
+    public static String append(String str, String appendStr, String separator, boolean distinct, boolean appendHead) {
+        if (org.apache.commons.lang3.StringUtils.isBlank(str)) {
+            return appendStr;
+        }
+
+        if (org.apache.commons.lang3.StringUtils.isBlank(appendStr)) {
+            return str;
+        }
+
+        List<String> list = Splitter.on(separator).splitToList(str);
+
+        List<String> newList = new ArrayList<String>(list);
+        if (appendHead) {
+            // 添加在头部
+            newList.add(0, appendStr);
+        } else {
+            // 添加在尾部
+            newList.add(appendStr);
+        }
+
+        if (distinct) {
+            // 去重
+            Set<String> set = new LinkedHashSet<String>(newList);
+            return org.apache.commons.lang3.StringUtils.join(set, separator);
+        }
+
+        return org.apache.commons.lang3.StringUtils.join(newList, separator);
+
+    }
+
 
     public static void main(String[] args) {
 
@@ -150,6 +219,8 @@ public class StringUtils {
         System.out.println(deleteFirstAndLastChar(invoiceNo, "/"));
 
         System.out.println(asciiToString(65 + 2 + 0));
+
+        System.out.println(append("金甲卡卡龙；哈勃望眼镜；笔记本", "哈勃望眼镜", "；", true, true));
 
     }
 
