@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @since 2021.07.04
  **/
 @RuleBean
-@Rule(order = 2)
+@Rule(name = "HelloWorldRule", order = 2)
 public class WorldSpringRule {
 
     @Autowired
