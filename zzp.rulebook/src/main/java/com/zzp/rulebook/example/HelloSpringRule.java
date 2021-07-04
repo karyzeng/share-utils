@@ -9,7 +9,7 @@ import com.deliveredtechnologies.rulebook.spring.RuleBean;
  * @since 2021.07.04
  **/
 @RuleBean
-@Rule(order = 1)
+@Rule(name = "HelloWorldRule", order = 1)
 public class HelloSpringRule {
 
     @Given("hello")
