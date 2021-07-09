@@ -9,7 +9,7 @@ public class LinkBlockQueue {
 
     public static void main(String[] args) {
         User user1 = new User();
-        
+
         user1.setName("zz");
         user1.setAge(12);
 
