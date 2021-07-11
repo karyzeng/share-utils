@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+
+    <!-- logback的日志级别从小到大 TRACE < DEBUG < INFO < WARN < ERROR
+         级别越小，打印信息越为详细，级别越大，打印信息越为简略 -->
+    <!--定义日志文件的存储地址 -->
+    <!-- 日志输出地址win和linux不同，win建议指定绝对路径，linux使用../logs -->
+    <property name="LOG_HOME" value="E:/zzp/logs/spring-cloud-nacos" />
+    <!-- 日志文件的最大大小 -->
+    <property name="LOG_MAX_SIZE" value="1024MB" />
+    <!-- 日志文件的最大大小 -->
+    <property name="LOG_MAX_HISTORY" value="30" />
+    <!-- 格式化输出：%d表示日期，%thread/%t表示线程名，%-5level：级别从左显示5个字符宽度，%msg：日志消息，%n是换行符 -->
+    <property name="STDOUT_LOG_PATTERN" value="%blue(%d{yyyy-MM-dd HH:mm:ss.SSS}) [%cyan(%t)] %-5level %logger{50}:%L - %msg%n"/>
+    <property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{50}:%L - %msg%n"/>
+    <!--
+        获取application.properties文件中的server.port配置
+     -->
+    <springProperty scope="context" name="SERVER_PORT" source="server.port" defaultValue="8081"/>
+    <springProperty scope="context" name="APP_NAME" source="spring.application.name" defaultValue="nacos-example"/>
+    <!-- 获取当前机器ip -->
+    <conversionRule conversionWord="ip" converterClass="com.zzp.nacos.config.LogIpConfig" />
+
+    <!-- 控制台输出 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!-- 格式化输出：%d表示日期，%thread/%t表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
+            <pattern>${STDOUT_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 按照每天生成日志文件 -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--日志文件输出的文件名 -->
+            <FileNamePattern>${LOG_HOME}/spring-cloud-nacos.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <!--日志文件保留天数 -->
+            <MaxHistory>${LOG_MAX_HISTORY}</MaxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出：%d表示日期，%thread/%t表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+        <!--日志文件最大的大小 -->
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>${LOG_MAX_SIZE}</MaxFileSize>
+        </triggeringPolicy>
+    </appender>
+
+    <!--
+        root节点：
+        1、root节点也是属于logger节点，只是root节点作为所有logger节点的根节点，且其名称就是为root，为了方便区分，将其命名为root节点
+        2、root节点只有一个level属性
+
+        logger节点：
+        1、name属性可以指定某一个类或者某一个包下的类的日志输出级别
+        2、level属性为日志输出属性
+        3、additivity属性默认为true，true表示当前logger处理完日志打印之后还会向上传递到父节点root，由root再执行一次日志打印
+    -->
+
+    <!--myibatis log configure -->
+    <logger name="com.apache.ibatis" level="TRACE"/>
+    <logger name="java.sql.Connection" level="DEBUG" />
+    <logger name="java.sql.Statement" level="DEBUG" />
+    <logger name="java.sql.PreparedStatement" level="DEBUG" />
+
+    <!-- 日志输出级别 -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+<!--        <appender-ref ref="FILE" />-->
+    </root>
+
+</configuration>
