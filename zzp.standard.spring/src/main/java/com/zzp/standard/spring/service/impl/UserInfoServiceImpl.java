@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * <p>
  *  用户信息 服务实现类
@@ -45,6 +47,23 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
 
         // 保存
         this.saveOrUpdate(userInfo);
+
+    }
+
+    @Override
+    @Transactional
+    public void delUserInfos(List<Integer> userIds) throws ApiException {
+
+        // 校验
+        userInfoServiceValidator.delValidate(userIds);
+
+        // 删除
+        this.removeByIds(userIds);
+    }
+
+    @Override
+    @Transactional
+    public void updateStatus(List<Integer> userIds, Integer status) throws ApiException {
 
     }
 }

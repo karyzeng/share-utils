@@ -48,4 +48,34 @@ public class UserInfoDomain extends UserInfo implements Serializable {
         return userInfo;
     }
 
+    public boolean isDel(UserInfo userInfo) {
+        if (userInfo == null) {
+            return true;
+        }
+
+        if (userInfo.getStatus().equals(0)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public UserInfo enable(UserInfo userInfo) {
+        if (userInfo == null){
+            return null;
+        }
+
+        userInfo.setStatus(1);
+        return userInfo;
+    }
+
+    public UserInfo disable(UserInfo userInfo) {
+        if (userInfo == null){
+            return null;
+        }
+
+        userInfo.setStatus(0);
+        return userInfo;
+    }
+
 }

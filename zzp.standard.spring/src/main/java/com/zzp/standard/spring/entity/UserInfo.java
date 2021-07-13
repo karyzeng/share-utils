@@ -51,5 +51,10 @@ public class UserInfo implements Serializable {
      */
     private Date updateTime;
 
+    /**
+     * 状态，1表示启用，0表示禁用
+     */
+    private Integer status;
+
 
 }

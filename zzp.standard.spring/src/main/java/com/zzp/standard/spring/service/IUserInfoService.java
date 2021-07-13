@@ -5,6 +5,8 @@ import com.zzp.standard.spring.entity.UserInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zzp.standard.spring.vo.UserInfoVo;
 
+import java.util.List;
+
 /**
  * <p>
  *  用户信息 服务类
@@ -16,5 +18,9 @@ import com.zzp.standard.spring.vo.UserInfoVo;
 public interface IUserInfoService extends IService<UserInfo> {
 
     void saveUserInfo(UserInfoVo userInfoVo) throws ApiException;
+
+    void delUserInfos(List<Integer> userIds) throws ApiException;
+
+    void updateStatus(List<Integer> userIds, Integer status) throws ApiException;
 
 }

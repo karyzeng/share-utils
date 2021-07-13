@@ -4,6 +4,7 @@ package com.zzp.standard.spring.controller;
 import com.baomidou.mybatisplus.extension.exceptions.ApiException;
 import com.zzp.base.results.Result;
 import com.zzp.standard.spring.service.IUserInfoService;
+import com.zzp.standard.spring.vo.UserInfoOperationVo;
 import com.zzp.standard.spring.vo.UserInfoVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +40,23 @@ public class UserInfoController {
         } catch (Exception e) {
             e.printStackTrace();
             logger.error("保存接口出现系统异常，异常信息为", e);
+            return Result.failed("保存失败");
+        }
+        return Result.ok("保存成功");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "del", method = RequestMethod.POST)
+    public Result<Boolean> del(@RequestBody UserInfoOperationVo operationVo) {
+        try {
+            userInfoService.delUserInfos(operationVo.getIds());
+        } catch (ApiException e) {
+            e.printStackTrace();
+            logger.error("删除接口出现业务异常，异常信息为", e);
+            return Result.failed(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("删除接口出现系统异常，异常信息为", e);
             return Result.failed("保存失败");
         }
         return Result.ok("保存成功");
