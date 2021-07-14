@@ -24,4 +24,9 @@ public class UserInfoOperationVo implements Serializable {
      */
     private List<Integer> ids;
 
+    /**
+     * 状态
+     */
+    private Integer status;
+
 }
