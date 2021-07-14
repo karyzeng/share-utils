@@ -3,6 +3,7 @@ package com.zzp.standard.spring.service.validator;
 import com.baomidou.mybatisplus.extension.exceptions.ApiException;
 import com.zzp.standard.spring.entity.UserInfo;
 import com.zzp.standard.spring.entity.domain.UserInfoDomain;
+import com.zzp.standard.spring.enums.UserInfoStatusEnum;
 import com.zzp.standard.spring.service.IUserInfoService;
 import com.zzp.standard.spring.vo.UserInfoVo;
 import org.apache.commons.collections.CollectionUtils;
@@ -62,7 +63,13 @@ public class UserInfoServiceValidator {
     }
 
     public void updateStatusValidate(Integer status) throws ApiException {
+        if (status == null) {
+            throw new ApiException("修改的状态不能为空");
+        }
 
+        if (UserInfoStatusEnum.getById(status) == null) {
+            throw new ApiException("状态在系统不存在");
+        }
     }
 
 }
