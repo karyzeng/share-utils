@@ -1,5 +1,6 @@
 package com.zzp.standard.spring.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.exceptions.ApiException;
 import com.zzp.standard.spring.entity.UserInfo;
 import com.zzp.standard.spring.entity.domain.UserInfoDomain;
@@ -64,6 +65,19 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
     @Override
     @Transactional
     public void updateStatus(List<Integer> userIds, Integer status) throws ApiException {
+        // 校验
+        userInfoServiceValidator.updateStatusValidate(status);
+
+        // 查询出用户列表
+        LambdaQueryWrapper<UserInfo> queryWrapper = new LambdaQueryWrapper<UserInfo>();
+        queryWrapper.in(UserInfo::getId, userIds);
+        List<UserInfo> userInfos = this.list(queryWrapper);
+
+        // 转换状态
+        userInfos = userInfoDomain.transformationStatus(userInfos, status);
+
+        // 更新
+        this.updateBatchById(userInfos);
 
     }
 }
