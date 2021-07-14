@@ -57,9 +57,26 @@ public class UserInfoController {
         } catch (Exception e) {
             e.printStackTrace();
             logger.error("删除接口出现系统异常，异常信息为", e);
-            return Result.failed("保存失败");
+            return Result.failed("删除失败");
         }
-        return Result.ok("保存成功");
+        return Result.ok("删除成功");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "updateStatus", method = RequestMethod.POST)
+    public Result<Boolean> updateStatus(@RequestBody UserInfoOperationVo operationVo) {
+        try {
+            userInfoService.updateStatus(operationVo.getIds(), operationVo.getStatus());
+        } catch (ApiException e) {
+            e.printStackTrace();
+            logger.error("更新状态接口出现业务异常，异常信息为", e);
+            return Result.failed(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("更新状态接口出现系统异常，异常信息为", e);
+            return Result.failed("更新失败");
+        }
+        return Result.ok("更新成功");
     }
 
 }
