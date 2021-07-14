@@ -6,12 +6,14 @@ import com.zzp.standard.spring.vo.UserInfoVo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Description 用户信息Domain
@@ -60,21 +62,15 @@ public class UserInfoDomain extends UserInfo implements Serializable {
         return false;
     }
 
-    public UserInfo enable(UserInfo userInfo) {
-        if (userInfo == null){
+    public List<UserInfo> transformationStatus(List<UserInfo> userInfo, Integer status) {
+        if (CollectionUtils.isEmpty(userInfo)) {
             return null;
         }
 
-        userInfo.setStatus(1);
-        return userInfo;
-    }
+        userInfo.stream().forEach(u -> {
+            u.setStatus(status);
+        });
 
-    public UserInfo disable(UserInfo userInfo) {
-        if (userInfo == null){
-            return null;
-        }
-
-        userInfo.setStatus(0);
         return userInfo;
     }
 
