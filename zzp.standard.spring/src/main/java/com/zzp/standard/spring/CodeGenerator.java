@@ -10,9 +10,8 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.io.File;
+import java.util.*;
 
 public class CodeGenerator {
 	 /**
@@ -41,7 +40,7 @@ public class CodeGenerator {
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
         //String projectPath = System.getProperty("user.dir");
-        final String projectPath = "/Users/zzp/Documents/coding/Java/generator_code";
+        final String projectPath = "/Users/zzp/Documents/coding/Java/generator_code/test";
         gc.setOutputDir(projectPath + "/src/main/java");
         gc.setAuthor("zzp");
         gc.setOpen(false);
@@ -60,7 +59,9 @@ public class CodeGenerator {
         // 包配置
         final PackageConfig pc = new PackageConfig();
         pc.setModuleName(scanner("模块"));
-        pc.setParent("com.zzp");
+        String packageParent = "com.zzp";
+        String packageParentPath = packageParent.replaceAll("\\.", StringPool.BACK_SLASH + File.separator);
+        pc.setParent(packageParent);
         mpg.setPackageInfo(pc);
 
         // 自定义配置
@@ -68,6 +69,8 @@ public class CodeGenerator {
             @Override
             public void initMap() {
                 // to do nothing
+//                Map<String, Object> map = new HashMap<String, Object>();
+
             }
         };
 
@@ -85,6 +88,26 @@ public class CodeGenerator {
                 // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
                 return projectPath + "/src/main/resources/mapper/" + pc.getModuleName()
                         + "/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
+            }
+        });
+
+        // 自定义配置会被优先输出
+        focList.add(new FileOutConfig("/templates/domain.java.ftl") {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
+                return projectPath + "/src/main/java/" + packageParentPath + "/" + pc.getModuleName() + "/" + pc.getEntity() + "/domain"
+                        + "/" + tableInfo.getEntityName() + "Domain" + StringPool.DOT_JAVA;
+            }
+        });
+
+        // 自定义配置会被优先输出
+        focList.add(new FileOutConfig("/templates/validator.java.ftl") {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
+                return projectPath + "/src/main/java/" + packageParentPath + "/" + pc.getModuleName() + "/" + pc.getService() + "/validator"
+                        + "/" + tableInfo.getEntityName() + "ServiceValidator" + StringPool.DOT_JAVA;
             }
         });
 
