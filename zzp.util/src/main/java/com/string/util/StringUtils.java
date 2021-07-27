@@ -1,10 +1,14 @@
 package com.string.util;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Splitter;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -209,18 +213,29 @@ public class StringUtils {
 
     public static void main(String[] args) {
 
-        String content = "1|1|缶4|34好的没问题安安定定aadded中e是打卡机冷风机aa";
-        System.out.println(content.length());
-        System.out.println(strByteLengthByStream(content));
-        System.out.println(UUID());
+        JSONObject jsonObject = JSON.parseObject("{\"list\":[{\"name\":\"zzp\"}],\"size\":1}");
+        Map<String, Object> map = jsonObject.getInnerMap();
+        for (String key : map.keySet()) {
+            Object obj = map.get(key);
+            if (obj instanceof JSONArray) {
+                System.out.println("key:" + key + " is jsonArray，value:" + obj);
+            } else {
+                System.out.println(obj);
+            }
+        }
 
-        String invoiceNo = "/CK发票号001/";
-        System.out.println(invoiceNo);
-        System.out.println(deleteFirstAndLastChar(invoiceNo, "/"));
-
-        System.out.println(asciiToString(65 + 2 + 0));
-
-        System.out.println(append("金甲卡卡龙；哈勃望眼镜；笔记本", "哈勃望眼镜", "；", true, true));
+//        String content = "1|1|缶4|34好的没问题安安定定aadded中e是打卡机冷风机aa";
+//        System.out.println(content.length());
+//        System.out.println(strByteLengthByStream(content));
+//        System.out.println(UUID());
+//
+//        String invoiceNo = "/CK发票号001/";
+//        System.out.println(invoiceNo);
+//        System.out.println(deleteFirstAndLastChar(invoiceNo, "/"));
+//
+//        System.out.println(asciiToString(65 + 2 + 0));
+//
+//        System.out.println(append("金甲卡卡龙；哈勃望眼镜；笔记本", "哈勃望眼镜", "；", true, true));
 
     }
 
