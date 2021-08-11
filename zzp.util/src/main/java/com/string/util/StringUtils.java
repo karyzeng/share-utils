@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Splitter;
+import org.apache.commons.lang3.BooleanUtils;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -210,6 +211,33 @@ public class StringUtils {
 
     }
 
+    public static void appendBitStr(StringBuffer bf, Boolean sign) {
+        if (bf == null) {
+            return;
+        }
+
+        if (BooleanUtils.isTrue(sign)) {
+            bf.append("1");
+        } else {
+            bf.append("0");
+        }
+    }
+
+    private static Boolean analysisBitStr(String bitStr, int start, int end) {
+        if (org.apache.commons.lang3.StringUtils.isBlank(bitStr)) {
+            return null;
+        }
+
+        String bit = bitStr.substring(start, end);
+        if ("1".equals(bit)) {
+            return true;
+        } else if ("0".equals(bit)){
+            return false;
+        }
+
+        return null;
+    }
+
 
     public static void main(String[] args) {
 
@@ -236,6 +264,22 @@ public class StringUtils {
 //        System.out.println(asciiToString(65 + 2 + 0));
 //
 //        System.out.println(append("金甲卡卡龙；哈勃望眼镜；笔记本", "哈勃望眼镜", "；", true, true));
+
+        StringBuffer sb = new StringBuffer();
+        appendBitStr(sb, true);
+        appendBitStr(sb, false);
+        appendBitStr(sb, null);
+        appendBitStr(sb, true);
+        appendBitStr(sb, null);
+
+        String str = sb.toString();
+        System.out.println(str);
+
+        System.out.println(analysisBitStr(str, 0, 1));
+        System.out.println(analysisBitStr(str, 1, 2));
+        System.out.println(analysisBitStr(str, 2, 3));
+        System.out.println(analysisBitStr(str, 3, 4));
+        System.out.println(analysisBitStr(str, 4, 5));
 
     }
 
