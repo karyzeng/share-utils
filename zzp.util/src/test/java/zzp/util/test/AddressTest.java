@@ -2,13 +2,16 @@ package zzp.util.test;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.base.Splitter;
 import junit.framework.Assert;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -97,5 +100,40 @@ public class AddressTest {
         jsonStr = JSON.parseObject(jsonStr, String.class);//有这个处理即可
         JSONObject jsonObject = JSON.parseObject(jsonStr);
         System.out.println("---");
+
+        BigDecimal b1 = new BigDecimal("0.0000");
+        System.out.println(b1.compareTo(BigDecimal.ZERO) > 0);
+
+        String ciqCode = "8536690000103";
+        String ciqCodeSuffix = ciqCode.substring(ciqCode.length() - 3, ciqCode.length());
+        System.out.println(ciqCodeSuffix);
+
+        String messageText = "4322,DECL001,QE93339";
+        Iterator<String> iterator = Splitter.on(',').split(messageText).iterator();
+        String companyCode = iterator.next();
+        String orderNo = iterator.next();
+        String citDocNo = null;
+        if (iterator.hasNext()) {
+            citDocNo = iterator.next();
+        }
+        System.out.println("---");
+
+        List<String> testList = new ArrayList<String>();
+        testList.add("zzz");
+        if (CollectionUtils.isNotEmpty(testList)) {
+            System.out.println("testList不为空");
+        } else {
+            System.out.println("testList为空");
+        }
+
+        String testStr = "  ";
+        if (StringUtils.isNotBlank(testStr)) {
+            System.out.println("testStr不为空");
+        } else {
+            System.out.println("testStr为空");
+        }
+
+        String isUpdate = null;
+        System.out.println("true".equals(isUpdate) ? true : "false".equals(isUpdate) ? false : null);
     }
 }
