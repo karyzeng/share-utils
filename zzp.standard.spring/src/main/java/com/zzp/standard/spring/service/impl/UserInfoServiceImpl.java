@@ -10,6 +10,8 @@ import com.zzp.standard.spring.service.IUserInfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zzp.standard.spring.service.validator.UserInfoServiceValidator;
 import com.zzp.standard.spring.vo.UserInfoVo;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +71,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
     @Log("更新用户状态")
     public void updateStatus(List<Integer> userIds, Integer status) throws ApiException {
         // 校验
-        userInfoServiceValidator.updateStatusValidate(null);
+        userInfoServiceValidator.updateStatusValidate(status);
 
         // 查询出用户列表
         LambdaQueryWrapper<UserInfo> queryWrapper = new LambdaQueryWrapper<UserInfo>();
@@ -82,5 +84,17 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         // 更新
         this.updateBatchById(userInfos);
 
+    }
+
+    @Override
+    public List<UserInfo> listUserInfo(List<Integer> ids, String loginId) throws ApiException {
+        LambdaQueryWrapper<UserInfo> queryWrapper = new LambdaQueryWrapper<>();
+        if (CollectionUtils.isNotEmpty(ids)) {
+            queryWrapper.in(UserInfo::getId, ids);
+        }
+        if (StringUtils.isNotBlank(loginId)) {
+            queryWrapper.eq(UserInfo::getLoginId, loginId);
+        }
+        return this.list(queryWrapper);
     }
 }
