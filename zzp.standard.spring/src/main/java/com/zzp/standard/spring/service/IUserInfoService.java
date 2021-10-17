@@ -23,4 +23,6 @@ public interface IUserInfoService extends IService<UserInfo> {
 
     void updateStatus(List<Integer> userIds, Integer status) throws ApiException;
 
+    List<UserInfo> listUserInfo(List<Integer> ids, String loginId) throws ApiException;
+
 }
