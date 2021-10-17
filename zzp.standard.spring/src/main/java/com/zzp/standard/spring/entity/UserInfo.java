@@ -1,5 +1,8 @@
 package com.zzp.standard.spring.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
@@ -55,6 +58,13 @@ public class UserInfo implements Serializable {
      * 状态，1表示启用，0表示禁用
      */
     private Integer status;
+
+    /**
+     * 是否删除，1表示是，0表示否
+     */
+    @TableLogic
+    @TableField(fill = FieldFill.INSERT)
+    private Boolean isDelete;
 
 
 }
