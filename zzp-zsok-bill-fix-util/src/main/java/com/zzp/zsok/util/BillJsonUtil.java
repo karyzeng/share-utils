@@ -9,11 +9,13 @@ import cn.hutool.core.text.csv.CsvReader;
 import cn.hutool.core.text.csv.CsvRow;
 import cn.hutool.core.text.csv.CsvUtil;
 import cn.hutool.core.util.CharsetUtil;
+import cn.hutool.json.JSON;
+import cn.hutool.json.JSONUtil;
 
 import java.io.File;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.nio.charset.Charset;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @Description 将推送的报关单数据生成JSON文件
@@ -24,31 +26,61 @@ public class BillJsonUtil {
 
     public static void main(String[] args) {
 
+        // 存放json文件的目录
         String folderPath = "/Users/zzp/Documents/工作/hoolinks/20220412/报关单JSON数据";
+        String csvFilePath = "/Users/zzp/Documents/工作/hoolinks/20220412/欧科-查询推送到云票通的报关单数据.csv";
+
+//        // 生成文件
+//        System.out.println("---- 开始生成报关单json文件 ----");
+//        createBillJsonFiles(folderPath, csvFilePath);
+//        System.out.println("---- 完成生成报关单json文件 ----");
+
+        // 读取文件
+        File[] files = FileUtil.ls(folderPath);
+        List<File> fileList = Arrays.asList(files).stream().filter(f -> f.getName().contains(".json")).collect(Collectors.toList());
+
+        // 根据文件名升序排序
+        fileList = fileList.stream().sorted(new Comparator<File>() {
+            @Override
+            public int compare(File o1, File o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        }).collect(Collectors.toList());
+
+        if (fileList.size() > 0) {
+//            for (File file : fileList) {
+//                Console.log(file.getName());
+//            }
+            String json = FileUtil.readString(fileList.get(0), Charset.forName("UTF-8"));
+            JSONUtil.parseObj(json);
+            Console.log(json);
+        }
+
+    }
+
+    private static void createBillJsonFiles(String folderPath, String csvFilePath) {
 
         CsvReader reader = CsvUtil.getReader();
         //从文件中读取CSV数据
-        CsvData data = reader.read(FileUtil.file("/Users/zzp/Documents/工作/hoolinks/20220412/欧科-查询推送到云票通的报关单数据.csv"), CharsetUtil.CHARSET_GBK);
+        CsvData data = reader.read(FileUtil.file(csvFilePath), CharsetUtil.CHARSET_GBK);
         List<CsvRow> rows = data.getRows();
 
-        CsvRow row1 = rows.get(1);
-        Console.log(row1.getRawList().get(5), row1.getRawList().get(9));
-        Date date = DateUtil.parse(row1.getRawList().get(5), "MMM dd, yyyy @ HH:mm:ss.SSS", Locale.UK);
-//        System.out.println(date);
+        for (int i = 1; i < rows.size(); i++) {
+            // i = 1 表示跳过表头，表头下标为0
+            CsvRow csvRow = rows.get(i);
+            String fileName = getFormatDateStr(csvRow.getRawList().get(5)) + ".json";
+            String filePath = folderPath + File.separator + fileName;
 
-        String fileName = DateUtil.format(date, "yyyyMMddHHmmssSSS");
-        String filePath = folderPath + File.separator + fileName + ".json";
+            // 保存为json文件
+            FileUtil.touch(filePath);
+            FileWriter writer = new FileWriter(filePath);
+            writer.write(csvRow.getRawList().get(9));
+        }
+    }
 
-        FileUtil.touch(filePath);
-        FileWriter writer = new FileWriter(filePath);
-        writer.write(row1.getRawList().get(9));
-
-
-        //遍历行
-//        for (CsvRow csvRow : rows) {
-//            //getRawList返回一个List列表，列表的每一项为CSV中的一个单元格（既逗号分隔部分）
-//            Console.log(csvRow.getRawList().get(5), csvRow.getRawList().get(9));
-//        }
+    private static String getFormatDateStr(String origDateStr) {
+        Date date = DateUtil.parse(origDateStr, "MMM dd, yyyy @ HH:mm:ss.SSS", Locale.UK);
+        return DateUtil.format(date, "yyyyMMddHHmmssSSS");
     }
 
 }
