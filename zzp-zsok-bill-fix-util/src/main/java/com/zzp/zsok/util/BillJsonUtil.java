@@ -1,5 +1,6 @@
 package com.zzp.zsok.util;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileWriter;
@@ -9,8 +10,10 @@ import cn.hutool.core.text.csv.CsvReader;
 import cn.hutool.core.text.csv.CsvRow;
 import cn.hutool.core.text.csv.CsvUtil;
 import cn.hutool.core.util.CharsetUtil;
-import cn.hutool.json.JSON;
 import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 
 import java.io.File;
 import java.nio.charset.Charset;
@@ -47,14 +50,9 @@ public class BillJsonUtil {
             }
         }).collect(Collectors.toList());
 
-        if (fileList.size() > 0) {
-//            for (File file : fileList) {
-//                Console.log(file.getName());
-//            }
-            String json = FileUtil.readString(fileList.get(0), Charset.forName("UTF-8"));
-            JSONUtil.parseObj(json);
-            Console.log(json);
-        }
+        // 将文件列表转换为Map<String, JSONObject>
+        Map<String, JSONObject> billMap = convertBillMap(fileList);
+        Console.log(billMap.size());
 
     }
 
@@ -81,6 +79,39 @@ public class BillJsonUtil {
     private static String getFormatDateStr(String origDateStr) {
         Date date = DateUtil.parse(origDateStr, "MMM dd, yyyy @ HH:mm:ss.SSS", Locale.UK);
         return DateUtil.format(date, "yyyyMMddHHmmssSSS");
+    }
+
+    private static Map<String, JSONObject> convertBillMap(List<File> fileList) {
+        if (CollectionUtil.isEmpty(fileList)) {
+            return null;
+        }
+
+        Map<String, JSONObject> map = new HashMap<>();
+        for (File file : fileList) {
+            Console.log(file.getName());
+            String json = FileUtil.readString(file, Charset.forName("UTF-8"));
+            Console.log(json);
+            JSONObject jsonObject = JSON.parseObject(json);
+            JSONArray bills = jsonObject.getJSONArray("bills");
+            if (bills.size() <= 0) {
+                continue;
+            }
+
+            for (int i = 0; i < bills.size(); i++) {
+                JSONObject bill = bills.getJSONObject(i);
+                if (bill == null) {
+                    continue;
+                }
+
+                String qpCustomCode = bill.getString("qpCustomCode");
+                if (qpCustomCode == null || qpCustomCode.equals("")) {
+                    continue;
+                }
+                map.put(qpCustomCode, bill);
+            }
+        }
+
+        return map;
     }
 
 }
